@@ -1,0 +1,36 @@
+<%= form_with(model: review) do |form| %>
+  <% if review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class ="field">
+    <%= form.label :restaurant_id, class: 'form-label'%>
+    <%= form.select :restaurant_id,
+    options_from_collection_for_select(restaurants, :id, :name, review.restaurant_id),
+    {include_blank: 'Select restaurant'}, class: 'form-select'%>
+     <% if @review.errors[:restaurant_id].any? %>
+            <div class="alert alert-danger" role="alert">
+                <%= @review.errors[:restaurant_id].first %>
+            </div>
+        <% end %>
+</div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_field :content %>
+  </div>
+
+  
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
